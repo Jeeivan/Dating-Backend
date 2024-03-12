@@ -14,15 +14,52 @@ export async function displayForms (req, res) {
 export async function submitForm (req, res) {
     try {
         const form = new Form({
-            name: req.body.name,
-            gender: req.body.gender,
-            age: req.body.age,
-            sexuality: req.body.sexuality
+            name: req.body.name
         })
         await form.save()
         res.json(form)
     } catch (err) {
         console.error('Error submitting form:', err)
         res.status(500).send(err.message)
+    }
+}
+
+export async function updateForm (req, res) {
+    try {
+        const { id } = req.params
+
+        let updatedForm = await Form.findByIdAndUpdate(id, req.body, {new: true})
+
+        if (!updatedForm) {
+            return res.status(404).json({ message: "Form not found" })
+        }
+
+        res.json(updateForm)
+    } catch (err) {
+        console.error("Error updating form", err)
+        res.status(500).send(err.message)
+    }
+}
+
+export async function addAnswers(req, res) {
+    try {
+        const { id } = req.params;
+
+        // Update the form document with the provided data
+        const updatedForm = await Form.findByIdAndUpdate(id, {
+            $push: {
+                answers: req.body.answers,
+                points: req.body.points
+            }
+        }, { new: true });
+
+        if (!updatedForm) {
+            return res.status(404).json({ message: "Form not found" });
+        }
+
+        res.json(updatedForm);
+    } catch (err) {
+        console.error('Error updating form:', err);
+        res.status(500).send(err.message);
     }
 }

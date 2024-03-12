@@ -4,15 +4,18 @@ const formSchema = new mongoose.Schema({
     name: {
         type: String
     },
-    gender: {
-        type: String
-    },
-    age: {
+    her_age: {
         type: Number
     },
-    sexuality: {
-        type: String
+    his_age: {
+        type: Number
     },
+    answers: {
+        type: [String]
+    },
+    points: {
+        type: [Number]
+    }
 })
 
 export const Form = mongoose.model('Form', formSchema)
