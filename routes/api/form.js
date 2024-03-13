@@ -1,9 +1,11 @@
-import {displayForms, submitForm, updateForm, addAnswers } from '../../controllers/api/form.js'
+import {displayForms, displaySingleForm, submitForm, updateForm, addAnswers } from '../../controllers/api/form.js'
 import express from 'express'
 
 const formRouter = express.Router()
 
 formRouter.get('/display', async (req, res) => displayForms(req, res))
+
+formRouter.get('/display/single/:id', async (req, res) => displaySingleForm(req, res))
 
 formRouter.post('/submit', async (req, res) => submitForm(req, res))
 

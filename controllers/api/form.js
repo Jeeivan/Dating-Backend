@@ -11,6 +11,23 @@ export async function displayForms (req, res) {
     }
 }
 
+export async function displaySingleForm (req, res) {
+    try {
+        const { id } = req.params
+
+        const form = await Form.findById(id)
+
+        if (!form) {
+            return res.status(404).json({ message: "Form not found"})
+        }
+
+        res.status(200).json(form)
+    } catch (error) {
+        console.error("Error getting form", error)
+        res.status(500).json({ message: "Internal server error" })
+    }
+}
+
 export async function submitForm (req, res) {
     try {
         const form = new Form({
