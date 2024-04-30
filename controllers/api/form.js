@@ -4,10 +4,25 @@ import { Form } from '../../models/form.js'
 export async function displayForms (req, res) {
     try {
         const forms = await Form.find()
+        console.log(forms)
         res.status(200).json(forms)
     } catch (error) {
         console.error(error)
         res.status(500).json({ message: "Internal server error" })
+    }
+}
+
+export async function displayByQuestion (req, res) {
+    try {
+        const { index } = req.params
+        const forms = await Form.find()
+
+        const answers = forms.map(form => form.answers[index])
+        res.status(200).json(answers)
+
+    } catch (error) {
+        console.error("Error fetching answers by single question", error)
+        res.status(500).json({ message: "Internal server error"})
     }
 }
 
