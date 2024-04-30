@@ -31,6 +31,7 @@ export async function displaySingleForm (req, res) {
         const { id } = req.params
 
         const form = await Form.findById(id)
+        console.log(form);
 
         if (!form) {
             return res.status(404).json({ message: "Form not found"})
