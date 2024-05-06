@@ -96,3 +96,24 @@ export async function addAnswers(req, res) {
         res.status(500).send(err.message);
     }
 }
+
+export async function addMessage(req, res) {
+    try {
+        const { id } = req.params
+
+        const updatedForm = await Form.findByIdAndUpdate(id, {
+            $push: {
+                answers: req.body.answers
+            }
+        }, {new: true})
+
+        if (!updatedForm) {
+            return res.status(404).json({ message: "Form not found"})
+        }
+
+        res.json(updateForm)
+    } catch (error) {
+        console.error('Error adding message:', error)
+        res.status(500).send(err.message)
+    }
+}
