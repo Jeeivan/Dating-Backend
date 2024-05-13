@@ -15,6 +15,9 @@ const formSchema = new mongoose.Schema({
     },
     points: {
         type: [Number]
+    },
+    green_flag: {
+        type: Boolean
     }
 })
 
